@@ -12,11 +12,17 @@ export class Opening implements DoorState {
 			this.doorController.changeState(new Opened(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		if (events[0] === 'O' && this.doorController.doorPosition < 5) {
+		const obstacleDetectedEvent = events[0] === 'O';
+		const doorIsOpening = (
+			this.doorController.doorPosition > 0
+				&& this.doorController.doorPosition < 5
+		);
+		if (obstacleDetectedEvent && doorIsOpening) {
 			this.doorController.changeState(new Closing(this.doorController));
 			return this.doorController.processEvents('.' + events.slice(1));
 		}
-		if (events[0] === 'P' && this.doorController.doorPosition > 0) {
+		const buttonPressedEvent = events[0] === 'P';
+		if (buttonPressedEvent && doorIsOpening) {
 			this.paused = !this.paused;
 		}
 		if (!this.paused) {

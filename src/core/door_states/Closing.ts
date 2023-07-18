@@ -8,7 +8,12 @@ export class Closing implements DoorState {
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
 		const doorIsFullyClosed = this.doorController.doorPosition == 0;
-		if (events[0] === 'O' && this.doorController.doorPosition > 0) {
+		const obstacleDetectedEvent = events[0] === 'O';
+		const doorIsClosing = (
+			this.doorController.doorPosition > 0
+				&& this.doorController.doorPosition < 5
+		);
+		if (obstacleDetectedEvent && doorIsClosing) {
 			this.doorController.changeState(new Opening(this.doorController));
 			return this.doorController.processEvents('.' + events.slice(1));
 		}
@@ -16,7 +21,8 @@ export class Closing implements DoorState {
 			this.doorController.changeState(new Closed(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		if (events[0] === 'P' && this.doorController.doorPosition < 5) {
+		const buttonPressedEvent = events[0] === 'P';
+		if (buttonPressedEvent && doorIsClosing) {
 			this.paused = !this.paused;
 		}
 		if (!this.paused) {
