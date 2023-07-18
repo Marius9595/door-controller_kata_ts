@@ -5,7 +5,8 @@ import { Opening } from './Opening';
 export class Closed implements DoorState {
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
-		if (events[0] === 'P') {
+		const buttonPressedEvent = events[0] === 'P';
+		if (buttonPressedEvent) {
 			this.doorController.changeState(new Opening(this.doorController));
 			return this.doorController.processEvents(events);
 		}
