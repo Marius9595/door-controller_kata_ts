@@ -4,7 +4,7 @@ import { DoorController } from "../core/DoorController";
 	CASES:
     "." -> "0" ✅
     ".." -> "00" ✅
-    ".P" -> "01"
+    ".P" -> "01" ✅
     ".P...." -> "012345"
     ".P....." -> "01234555"
     ".P.....P" -> "01234554"
@@ -30,5 +30,9 @@ describe('door controller', () => {
 
 	it('should start open the door when this is closed and button is pressed', function () {
 		expect(new DoorController().processEvents('.P')).toBe('01');
+	});
+
+	it('should open the door completely when this was closed and button was pressed', function () {
+		expect(new DoorController().processEvents('.P....')).toBe('012345');
 	});
 });
