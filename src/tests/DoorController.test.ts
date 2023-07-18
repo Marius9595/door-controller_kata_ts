@@ -7,7 +7,7 @@ import { DoorController } from "../core/DoorController";
     ".P" -> "01" ✅
     ".P...." -> "012345" ✅
     ".P......" -> "01234555" ✅
-    ".P.....P" -> "01234554"
+    ".P.....P" -> "01234554" ✅
     ".P.....P...." -> "012345543210"
     ".P.P." -> "0122"
     ".P.P....." -> "01222222"
@@ -32,7 +32,7 @@ describe('door controller', () => {
 		expect(new DoorController().processEvents('.P')).toBe('01');
 	});
 
-	it('should open the door completely when this was closed and button was pressed', function () {
+	it('should open the door completely when this is closed and button was pressed', function () {
 		expect(new DoorController().processEvents('.P....')).toBe('012345');
 	});
 
@@ -42,5 +42,9 @@ describe('door controller', () => {
 
 	it('should start close the door when this is opened and button is pressed', function () {
 		expect(new DoorController().processEvents('.P.....P')).toBe('01234554');
+	});
+
+	it('should close the door completely when this is opened and button was pressed', function () {
+		expect(new DoorController().processEvents('.P.....P....')).toBe('012345543210');
 	});
 });
