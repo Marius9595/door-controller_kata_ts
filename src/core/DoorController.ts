@@ -1,5 +1,8 @@
 export class DoorController {
 	processEvents(events: string) {
-		return "0";
+		if (events.length === 1) {
+			return '0';
+		}
+		return '0' + this.processEvents(events.slice(1));
 	}
 }
