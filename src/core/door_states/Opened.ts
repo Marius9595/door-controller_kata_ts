@@ -1,6 +1,6 @@
 import { DoorState } from '../DoorState';
 import { DoorController } from '../DoorController';
-import { Closing } from "./Closing";
+import { Closing } from './Closing';
 
 export class Opened implements DoorState {
 	constructor(private doorController: DoorController) {}
