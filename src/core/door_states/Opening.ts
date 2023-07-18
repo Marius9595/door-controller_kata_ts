@@ -1,25 +1,29 @@
 import { DoorState } from '../DoorState';
 import { DoorController } from '../DoorController';
 import { Opened } from './Opened';
+import { Closing } from "./Closing";
 
 export class Opening implements DoorState {
-	private doorPosition = 0;
 	private paused = false;
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
-		const doorIsFullyOpen = this.doorPosition == 5;
+		const doorIsFullyOpen = this.doorController.doorPosition == 5;
 		if (doorIsFullyOpen) {
 			this.doorController.changeState(new Opened(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		if (events[0] === 'P' && this.doorPosition > 0) {
+		if (events[0] === 'O' && this.doorController.doorPosition < 5) {
+			this.doorController.changeState(new Closing(this.doorController));
+			return this.doorController.processEvents('.' + events.slice(1));
+		}
+		if (events[0] === 'P' && this.doorController.doorPosition > 0) {
 			this.paused = !this.paused;
 		}
 		if (!this.paused) {
-			this.doorPosition++;
+			this.doorController.doorPosition++;
 		}
 
-		const processedEvent = this.doorPosition.toString();
+		const processedEvent = this.doorController.doorPosition.toString();
 		const lastEventToProcess = events.length === 1;
 		if (lastEventToProcess) {
 			return processedEvent;

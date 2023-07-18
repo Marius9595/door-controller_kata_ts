@@ -3,22 +3,21 @@ import { DoorController } from '../DoorController';
 import { Closed } from './Closed';
 
 export class Closing implements DoorState {
-	private doorPosition = 5;
 	private paused = false;
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
-		const doorIsFullyClosed = this.doorPosition == 0;
+		const doorIsFullyClosed = this.doorController.doorPosition == 0;
 		if (doorIsFullyClosed) {
 			this.doorController.changeState(new Closed(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		if (events[0] === 'P' && this.doorPosition < 5) {
+		if (events[0] === 'P' && this.doorController.doorPosition < 5) {
 			this.paused = !this.paused;
 		}
 		if (!this.paused) {
-			this.doorPosition--;
+			this.doorController.doorPosition--;
 		}
-		const processedEvent = this.doorPosition.toString();
+		const processedEvent = this.doorController.doorPosition.toString();
 		const lastEventToProcess = events.length === 1;
 		if (lastEventToProcess) {
 			return processedEvent;
