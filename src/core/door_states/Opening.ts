@@ -12,8 +12,8 @@ export class Opening implements DoorState {
 			this.doorController.changeState(new Opened(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		if (events[0] === 'P' && this.doorPosition > 0 && !this.paused) {
-			this.paused = true;
+		if (events[0] === 'P' && this.doorPosition > 0) {
+			this.paused = !this.paused;
 		}
 		if (!this.paused) {
 			this.doorPosition++;
