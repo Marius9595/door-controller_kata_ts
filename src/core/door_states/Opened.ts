@@ -7,9 +7,10 @@ export class Opened implements DoorState {
 		if (events[0] === 'P') {
 			return '4';
 		}
+		const processedEvent = '5';
 		if (events.length === 1) {
-			return '5';
+			return processedEvent;
 		}
-		return '5' + this.doorController.processEvents(events.slice(1));
+		return processedEvent + this.doorController.processEvents(events.slice(1));
 	}
 }
