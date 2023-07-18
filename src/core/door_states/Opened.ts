@@ -10,9 +10,11 @@ export class Opened implements DoorState {
 			return this.doorController.processEvents(events);
 		}
 		const processedEvent = '5';
-		if (events.length === 1) {
+		const isLastEventToProcess = events.length === 1;
+		if (isLastEventToProcess) {
 			return processedEvent;
 		}
-		return processedEvent + this.doorController.processEvents(events.slice(1));
+		const restEventsToProcess = this.doorController.processEvents(events.slice(1));
+		return processedEvent + restEventsToProcess;
 	}
 }
