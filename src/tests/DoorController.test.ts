@@ -1,6 +1,6 @@
 /*
 	CASES:
-    "." -> "0"
+    "." -> "0" ✅
     ".." -> "00"
     ".P" -> "01"
     ".P...." -> "012345"
@@ -22,5 +22,9 @@ import { DoorController } from "../core/DoorController";
 describe('door controller', () => {
 	it('should be start working with a closed door', function () {
 		expect(new DoorController().processEvents('.')).toBe('0');
+	});
+
+	it('should be keep the door closed while no events occur', function () {
+		expect(new DoorController().processEvents('..')).toBe('00');
 	});
 });
