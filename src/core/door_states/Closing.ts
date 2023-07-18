@@ -4,6 +4,7 @@ import { Closed } from './Closed';
 
 export class Closing implements DoorState {
 	private doorPosition = 5;
+	private paused = false;
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
 		const doorIsFullyClosed = this.doorPosition == 0;
@@ -11,7 +12,12 @@ export class Closing implements DoorState {
 			this.doorController.changeState(new Closed(this.doorController));
 			return this.doorController.processEvents(events);
 		}
-		this.doorPosition--;
+		if (events[0] === 'P' && this.doorPosition < 5) {
+			this.paused = !this.paused;
+		}
+		if (!this.paused) {
+			this.doorPosition--;
+		}
 		const processedEvent = this.doorPosition.toString();
 		const lastEventToProcess = events.length === 1;
 		if (lastEventToProcess) {

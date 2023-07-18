@@ -11,8 +11,8 @@ import { DoorController } from "../core/DoorController";
     ".P.....P...." -> "012345543210" ✅
     ".P.P." -> "01222" ✅
     ".P.P.P." -> "0122234" ✅
-    ".P.....P.P." -> "01234554333"
-    ".P.....P.P....." -> "0123455432222"
+    ".P.....P.P." -> "01234554333" ✅
+    ".P.....P.P.P" -> "012345543332" ✅
     ".P.....P.P.P" -> "01234554332"
     ".P..O." -> "01232"
     ".P.....P.O." -> "01234554345"
@@ -57,5 +57,9 @@ describe('door controller', () => {
 
 	it('should pause the closing of door when button is pressed', function () {
 		expect(new DoorController().processEvents('.P.....P.P.')).toBe('01234554333');
+	});
+
+	it('should restart the closing of door when button is pressed from the the current position of door', function () {
+		expect(new DoorController().processEvents('.P.....P.P.P')).toBe('012345543332');
 	});
 });
