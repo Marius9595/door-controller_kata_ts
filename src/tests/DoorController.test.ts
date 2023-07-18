@@ -65,4 +65,8 @@ describe('door controller', () => {
 	it('should change the opening to closing door when obstacle is detected', function () {
 		expect(new DoorController().processEvents('.P..O.')).toBe('012321');
 	});
+
+	it('should change the closing to opening door when obstacle is detected', function () {
+		expect(new DoorController().processEvents('.P.....P.O.')).toBe('01234554345');
+	});
 });
