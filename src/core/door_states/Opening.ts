@@ -5,7 +5,9 @@ export class Opening implements DoorState {
 	private position = 0;
 	constructor(private doorController: DoorController) {}
 	processEvents(events: string): string {
-		this.position++;
+		if (this.position < 5) {
+			this.position++;
+		}
 		const processedEvent = this.position.toString();
 		const lastEventToProcess = events.length === 1;
 		if (lastEventToProcess) {
