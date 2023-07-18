@@ -8,8 +8,8 @@ import { DoorController } from "../core/DoorController";
     ".P...." -> "012345" ✅
     ".P......" -> "01234555" ✅
     ".P.....P" -> "01234554" ✅
-    ".P.....P...." -> "012345543210"
-    ".P.P." -> "0122"
+    ".P.....P...." -> "012345543210" ✅
+    ".P.P." -> "01222"
     ".P.P....." -> "01222222"
     ".P.P.....P" -> "01222223"
     ".P.....P.P." -> "01234554322"
@@ -46,5 +46,9 @@ describe('door controller', () => {
 
 	it('should close the door completely when this is opened and button was pressed', function () {
 		expect(new DoorController().processEvents('.P.....P....')).toBe('012345543210');
+	});
+
+	it('should pause the opening of door when button is pressed', function () {
+		expect(new DoorController().processEvents('.P.P.')).toBe('01222');
 	});
 });
