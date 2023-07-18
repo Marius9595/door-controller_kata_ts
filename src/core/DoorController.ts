@@ -4,9 +4,11 @@ export class DoorController {
 		if (events[0] == 'P') {
 			processedEvent = '1';
 		}
-		if (events.length === 1) {
+		const isLastEventToProcess = events.length === 1;
+		if (isLastEventToProcess) {
 			return processedEvent;
 		}
-		return processedEvent + this.processEvents(events.slice(1));
+		const restEventsToProcess = this.processEvents(events.slice(1));
+		return processedEvent + restEventsToProcess;
 	}
 }
